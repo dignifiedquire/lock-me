@@ -33,5 +33,8 @@
   },
   "optionalDependencies": {
     "fs-ext": "github:caspertech/node-fs-ext#master"
-  }
+  },
+  "contributors": [
+    "Friedel Ziegelmayer <dignifiedquire@gmail.com>"
+  ]
 }
