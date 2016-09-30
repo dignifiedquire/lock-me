@@ -11,13 +11,12 @@
 [![standard-readme compliant](https://img.shields.io/badge/standard--readme-OK-green.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
 
 
-> Lock files across processes
+> Lock files across processes. Inspired by [go4 lock](https://github.com/camlistore/go4/blob/master/lock)
 
 ## Table of Contents
 
 - [Install](#install)
 - [Usage](#usage)
-- [API](#api)
 - [Contribute](#contribute)
 - [License](#license)
 
@@ -30,10 +29,24 @@ $ npm install lock-me
 ## Usage
 
 ```js
-const lock = require('lock-me')
+const Lock = require('lock-me')
+const mylock = new Lock()
+
+const lockfile = 'me.lock'
+
+lock(lockfile, (err, lk) => {
+  if (err) throw err
+  // 'me.lock' is now locked
+
+  lk.close((err) => {
+    if (err) throw err
+    // 'me.lock' is no longer locked
+  })
+})
 ```
 
-## API
+When the process dies, the lock is released so no stale lock files remain.
+If they do remain, `my-lock` will understand it and delete the stale file.
 
 ## Contribute
 
