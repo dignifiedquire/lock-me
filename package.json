@@ -36,5 +36,13 @@
   },
   "contributors": [
     "Friedel Ziegelmayer <dignifiedquire@gmail.com>"
-  ]
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dignifiedquire/lock-me.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dignifiedquire/lock-me/issues"
+  },
+  "homepage": "https://github.com/dignifiedquire/lock-me"
 }
