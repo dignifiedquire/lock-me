@@ -8,7 +8,6 @@ let isPortable
 let file
 
 process.on('message', (msg) => {
-  console.log('messag', msg)
   if (msg.type === 'init') {
     isPortable = msg.args.isPortable
     file = msg.args.file
@@ -18,8 +17,11 @@ process.on('message', (msg) => {
     process.send({error: 'No init'})
   } else if (msg.type === 'lock') {
     lock(file, (err, _lk) => {
+      if (err) {
+        return process.send({err})
+      }
       lk = _lk
-      process.send({err})
+      process.send({})
     })
   } else if (msg.type === 'unlock') {
     lk.close((err) => {

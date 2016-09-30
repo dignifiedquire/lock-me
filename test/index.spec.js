@@ -6,6 +6,7 @@ const series = require('async/series')
 const os = require('os')
 const path = require('path')
 const cp = require('child_process')
+const fs = require('fs')
 
 const Lock = require('../src')
 
@@ -14,7 +15,7 @@ describe('lock-me', () => {
     return testLock(false)
   })
 
-  it.skip('portable', () => {
+  it('portable', () => {
     return testLock(true)
   })
 })
@@ -24,6 +25,10 @@ function testLock (isPortable) {
   const tmpDir = os.tmpDir()
 
   const file = path.join(tmpDir, 'foo.lock')
+  try {
+    fs.unlinkSync(file)
+  } catch (err) {}
+
   let lk
 
   return spawnChild(file, isPortable)
@@ -77,27 +82,26 @@ function testLock (isPortable) {
   // Lock and unlock in the child
   .then((child) => child.send('lock'))
   .then((child) => child.send('unlock'))
+  .then((child) => child.send('exit'))
 }
 
 function spawnChild (file, isPortable) {
   const proc = cp.fork(`${__dirname}/child.js`)
-  let err
 
-  proc.on('error', (error) => {
-    err = error
+  proc.on('close', (code) => {
+    if (code > 0) {
+      throw new Error('Child exited')
+    }
+  })
+
+  proc.on('error', (err) => {
+    throw err
   })
 
   function send (type, args) {
     return new Promise((resolve, reject) => {
-      if (err) {
-        reject(err)
-        err = null
-        return
-      }
-      console.log('sending', type, args)
       proc.send({type, args})
       proc.once('message', (msg) => {
-        console.log('got message', msg)
         if (msg.error) {
           return reject(new Error(msg.error))
         }

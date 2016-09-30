@@ -25,7 +25,6 @@ module.exports = function unixLock (name, callback) {
     })
   ], (err, fd) => {
     if (err) {
-      console.log('error', err)
       return callback(err)
     }
 

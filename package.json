@@ -23,11 +23,12 @@
   "license": "MIT",
   "devDependencies": {
     "aegir": "^8.1.2",
-    "chai": "^3.5.0",
-    "execa": "^0.4.0"
+    "chai": "^3.5.0"
   },
   "dependencies": {
     "async": "^2.0.1",
+    "find-process": "^1.0.4",
+    "nodeify": "^1.0.0",
     "once": "^1.4.0"
   },
   "optionalDependencies": {

@@ -28,8 +28,10 @@ module.exports = function Lock (isPortable) {
       locked[unlocker.abs] = null
 
       if (isPortable) {
-        // TODO
-        return
+        return series([
+          (cb) => fs.close(unlocker.fd, cb),
+          (cb) => fs.unlink(unlocker.abs, cb)
+        ], cb)
       }
 
       series([
