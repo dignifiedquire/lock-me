@@ -22,7 +22,7 @@ describe('lock-me', () => {
 
 function testLock (isPortable) {
   const lock = Lock(isPortable)
-  const tmpDir = os.tmpDir()
+  const tmpDir = os.tmpdir()
 
   const file = path.join(tmpDir, 'foo.lock')
   try {
