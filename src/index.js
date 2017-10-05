@@ -7,9 +7,11 @@ const fs = require('fs')
 const portableLock = require('./portable')
 
 let unixLock
-try {
-  unixLock = require('./unix')
-} catch (err) {}
+if (process.platform !== 'win32') {
+  try {
+    unixLock = require('./unix')
+  } catch (err) {}
+}
 
 module.exports = function Lock (isPortable) {
   const locked = {}
