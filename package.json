@@ -32,7 +32,8 @@
     "fs-ext": "github:baudehlo/node-fs-ext#master"
   },
   "contributors": [
-    "Friedel Ziegelmayer <dignifiedquire@gmail.com>"
+    "Expyron <5100376+Expyron@users.noreply.github.com>",
+    "dignifiedquire <dignifiedquire@gmail.com>"
   ],
   "repository": {
     "type": "git",
