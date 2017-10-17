@@ -1,6 +1,6 @@
 {
   "name": "lock-me",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Lock files across processes",
   "main": "src/index.js",
   "scripts": {

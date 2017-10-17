@@ -1,3 +1,13 @@
+<a name="1.0.3"></a>
+## [1.0.3](https://github.com/dignifiedquire/lock-me/compare/v1.0.2...v1.0.3) (2017-10-17)
+
+
+### Bug Fixes
+
+* don't try to use Unix locks on Windows ([f616a05](https://github.com/dignifiedquire/lock-me/commit/f616a05))
+
+
+
 <a name="1.0.2"></a>
 ## [1.0.2](https://github.com/dignifiedquire/lock-me/compare/v1.0.1...v1.0.2) (2017-03-13)
 
