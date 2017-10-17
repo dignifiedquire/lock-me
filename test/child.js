@@ -32,4 +32,3 @@ process.on('message', (msg) => {
     process.exit(0)
   }
 })
-

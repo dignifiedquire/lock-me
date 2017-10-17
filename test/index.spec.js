@@ -32,57 +32,57 @@ function testLock (isPortable) {
   let lk
 
   return spawnChild(file, isPortable)
-  // Lock in child
-  .then((child) => child.send('lock'))
-  // Crash child
-  .then((child) => child.send('exit'))
-  // Create a new child
-  .then(() => spawnChild(file, isPortable))
-  // Lock and unlock
-  .then((child) => child.send('lock'))
-  .then((child) => child.send('unlock'))
-  .then((child) => new Promise((resolve, reject) => {
-    series([
-      // Lock in parent
-      (cb) => lock(file, (err, _lk) => {
-        if (err) {
-          return cb(err)
-        }
+    // Lock in child
+    .then((child) => child.send('lock'))
+    // Crash child
+    .then((child) => child.send('exit'))
+    // Create a new child
+    .then(() => spawnChild(file, isPortable))
+    // Lock and unlock
+    .then((child) => child.send('lock'))
+    .then((child) => child.send('unlock'))
+    .then((child) => new Promise((resolve, reject) => {
+      series([
+        // Lock in parent
+        (cb) => lock(file, (err, _lk) => {
+          if (err) {
+            return cb(err)
+          }
 
-        lk = _lk
-        cb()
-      }),
-      // Lock in parent a second time, should fail
-      (cb) => lock(file, (err) => {
-        expect(err).to.exist
-        cb()
+          lk = _lk
+          cb()
+        }),
+        // Lock in parent a second time, should fail
+        (cb) => lock(file, (err) => {
+          expect(err).to.be.an('Error')
+          cb()
+        })
+      ], (err) => {
+        if (err) {
+          return reject(err)
+        }
+        resolve(child)
       })
-    ], (err) => {
-      if (err) {
-        return reject(err)
-      }
-      resolve(child)
+    }))
+    // Lock in child, should fail
+    .then((child) => {
+      return child.send('lock')
+        .catch((err) => expect(err).to.exist)
+        .then(() => child)
     })
-  }))
-  // Lock in child, should fail
-  .then((child) => {
-    return child.send('lock')
-      .catch((err) => expect(err).to.exist)
-      .then(() => child)
-  })
-  // Unlock in parent
-  .then((child) => new Promise((resolve, reject) => {
-    lk.close((err) => {
-      if (err) {
-        return reject(err)
-      }
-      resolve(child)
-    })
-  }))
-  // Lock and unlock in the child
-  .then((child) => child.send('lock'))
-  .then((child) => child.send('unlock'))
-  .then((child) => child.send('exit'))
+    // Unlock in parent
+    .then((child) => new Promise((resolve, reject) => {
+      lk.close((err) => {
+        if (err) {
+          return reject(err)
+        }
+        resolve(child)
+      })
+    }))
+    // Lock and unlock in the child
+    .then((child) => child.send('lock'))
+    .then((child) => child.send('unlock'))
+    .then((child) => child.send('exit'))
 }
 
 function spawnChild (file, isPortable) {

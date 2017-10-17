@@ -1,8 +1,8 @@
 sudo: false
 language: node_js
 node_js:
-  - 4
-  - "stable"
+  - 6
+  - 8
 
 # Make sure we have new NPM.
 before_install:
@@ -11,7 +11,7 @@ before_install:
 script:
   - npm run lint
   - npm run test
-  - npm run coverage
+  - npm run coverage -- --upload
 
 addons:
   firefox: 'latest'
@@ -19,6 +19,3 @@ addons:
 before_script:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
-
-after_success:
-  - npm run coverage-publish

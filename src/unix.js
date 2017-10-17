@@ -1,7 +1,7 @@
 'use strict'
 
 const fs = require('fs-ext')
-const c = require('constants')
+const c = require('constants') // eslint-disable-line
 const waterfall = require('async/waterfall')
 
 module.exports = function unixLock (name, callback) {

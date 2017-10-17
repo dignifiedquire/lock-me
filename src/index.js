@@ -65,4 +65,3 @@ module.exports = function Lock (isPortable) {
     })
   }
 }
-

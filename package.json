@@ -4,13 +4,12 @@
   "description": "Lock files across processes",
   "main": "src/index.js",
   "scripts": {
-    "lint": "aegir-lint",
-    "test": "aegir-test --env node",
-    "release": "aegir-release --env node",
-    "release-minor": "aegir-release --type minor --env node",
-    "release-major": "aegir-release --type major --env node",
-    "coverage": "aegir-coverage",
-    "coverage-publish": "aegir-coverage publish"
+    "lint": "aegir lint",
+    "test": "aegir test --target node",
+    "release": "aegir release --target node",
+    "release-minor": "aegir release --type minor --target node",
+    "release-major": "aegir release --type major --target node",
+    "coverage": "aegir coverage"
   },
   "keywords": [
     "fcntl",
@@ -20,7 +19,7 @@
   "author": "Friedel Ziegelmayer <dignifiedquire@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "aegir": "^10.0.0",
+    "aegir": "^12.0.8",
     "chai": "^3.5.0"
   },
   "dependencies": {
