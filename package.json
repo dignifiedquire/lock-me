@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "lint": "aegir lint",
-    "test": "aegir test --target node -f 'test/**/*.spec.js'",
+    "test": "aegir test --target node",
     "release": "aegir release --target node",
     "release-minor": "aegir release --type minor --target node",
     "release-major": "aegir release --type major --target node",
