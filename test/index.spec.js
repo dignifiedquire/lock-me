@@ -27,7 +27,9 @@ function testLock (isPortable) {
   const file = path.join(tmpDir, 'foo.lock')
   try {
     fs.unlinkSync(file)
-  } catch (err) {}
+  } catch (err) {
+    // ignore
+  }
 
   let lk
 
