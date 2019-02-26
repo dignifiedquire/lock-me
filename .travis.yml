@@ -12,9 +12,8 @@ os:
 
 script:
   - npm run lint
-  - npx nyc -s npm run test
-
-after_success: npx nyc report --reporter=text-lcov > coverage.lcov && npx codecov
+  - npm run test
+  - npm run coverage -- --upload
 
 addons:
   firefox: 'latest'
