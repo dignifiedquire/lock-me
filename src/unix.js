@@ -14,7 +14,8 @@ module.exports = function unixLock (name, callback) {
       cb()
     }),
     (cb) => fs.open(name, 'w', cb),
-    (fd, cb) => fs.fcntl(fd, 'setlk', c.F_WRLCK, (err, res) => {
+    // 3 until https://github.com/baudehlo/node-fs-ext/issues/81 is resolved
+    (fd, cb) => fs.fcntl(fd, 'setlk', c.F_WRLCK || 3, (err, res) => {
       if (err) {
         return fs.close(fd, () => {
           cb(new Error(`Lock FcntlFlock of ${name} failed: ${err.message}`))

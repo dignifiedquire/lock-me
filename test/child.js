@@ -14,18 +14,21 @@ process.on('message', (msg) => {
     lock = Lock(isPortable)
     process.send({})
   } else if (!lock) {
-    process.send({error: 'No init'})
+    process.send({ error: { message: 'No init' } })
   } else if (msg.type === 'lock') {
     lock(file, (err, _lk) => {
       if (err) {
-        return process.send({err})
+        return process.send({ error: { message: err.message, stack: err.stack } })
       }
       lk = _lk
       process.send({})
     })
   } else if (msg.type === 'unlock') {
     lk.close((err) => {
-      process.send({err})
+      if (err) {
+        return process.send({ error: { message: err.message, stack: err.stack } })
+      }
+      process.send({})
     })
   } else if (msg.type === 'exit') {
     process.send({})

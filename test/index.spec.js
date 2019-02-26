@@ -27,7 +27,9 @@ function testLock (isPortable) {
   const file = path.join(tmpDir, 'foo.lock')
   try {
     fs.unlinkSync(file)
-  } catch (err) {}
+  } catch (err) {
+    // ignore
+  }
 
   let lk
 
@@ -100,15 +102,15 @@ function spawnChild (file, isPortable) {
 
   function send (type, args) {
     return new Promise((resolve, reject) => {
-      proc.send({type, args})
+      proc.send({ type, args })
       proc.once('message', (msg) => {
         if (msg.error) {
-          return reject(new Error(msg.error))
+          return reject(Object.assign(new Error(), msg.error))
         }
-        resolve({send})
+        resolve({ send })
       })
     })
   }
 
-  return send('init', {file, isPortable})
+  return send('init', { file, isPortable })
 }

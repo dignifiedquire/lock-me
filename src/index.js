@@ -10,7 +10,9 @@ let unixLock
 if (process.platform !== 'win32') {
   try {
     unixLock = require('./unix')
-  } catch (err) {}
+  } catch (err) {
+    // ignore
+  }
 }
 
 module.exports = function Lock (isPortable) {
