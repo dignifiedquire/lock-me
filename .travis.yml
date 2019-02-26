@@ -10,10 +10,6 @@ os:
   - linux
   - windows
 
-# Make sure we have new NPM.
-before_install:
-  - npm install -g npm
-
 script:
   - npm run lint
   - npm run test
